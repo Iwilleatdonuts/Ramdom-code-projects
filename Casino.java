@@ -127,30 +127,81 @@ public class Casino {
                     if (blackJackOptions == 1) {
 
                         boolean gameIsRunning = true;
+                        int playerScore = 0;
+
+                        int initCard1 = drawCard(false);
+                        int initCard2 = drawCard(false);
+
+                        int card1Value = Math.min(initCard1, 10);
+                        int card2Value = Math.min(initCard2, 10);
+
+                        if (card1Value == 1) {
+                            card1Value = 11;
+                        }
+                        if (card2Value == 1) {
+                            card2Value = 11;
+                        }
+
+                        playerScore = card1Value + card2Value;
+
+                        System.out.println(
+                                "\nYour starting hand is " + cards[initCard1 - 1] + " and " + cards[initCard2 - 1]);
 
                         while (gameIsRunning) {
 
-                            int playerScore = 0;
+                            if (playerScore == 21) {
 
-                            int initCard1 = drawCard(false);
-                            int initCard2 = drawCard(false);
+                                System.out.println("\nCongratulations! You achieved a hand-total of 21");
+                                System.out.println("\n$500 will be added to your balance...");
 
-                            int card1Value = Math.min(initCard1, 10);
-                            int card2Value = Math.min(initCard2, 10);
+                                currency += 500;
 
-                            if (card1Value == 1) {
-                                card1Value = 11;
+                                gameIsRunning = false;
+                                state = casinoGames.GAME_SELECTOR;
+
+                            } else if (playerScore > 21) {
+
+                                System.out.println("\nYou went above 21, womp womp");
+                                System.out.println("\n$500 will be taken from your account...");
+
+                                currency -= 500;
+
+                                gameIsRunning = false;
+                                state = casinoGames.GAME_SELECTOR;
+                                break;
+
+                            } else {
+
+                                System.out.println("Your current score is " + playerScore);
+
                             }
-                            if (card2Value == 1) {
-                                card2Value = 11;
+
+                            System.out.println("\nWhat will you do?");
+                            System.out.println("\t1 - Hit");
+                            System.out.println("\t2 - Stand");
+
+                            int hitOrStand = scanner.nextInt();
+
+                            if (hitOrStand == 1) {
+
+                                int drawCard = drawCard(false);
+                                int drawValue = Math.min(drawCard, 10);
+
+                                if (drawCard == 1 && playerScore < 11) {
+                                    drawValue = 11;
+                                }
+
+                                playerScore += drawValue;
+
+                                System.out.println("\nYou drew a " + cards[drawCard - 1]);
+
+                            } else {
+
+                                System.out.println("Dealer is now hiogh on larte night deluelues");
+
+                                gameIsRunning = false;
+                                state = casinoGames.GAME_SELECTOR;
                             }
-
-                            playerScore = card1Value + card2Value;
-
-                            System.out.println(
-                                    "Your starting hand is " + cards[initCard1 - 1] + " and " + cards[initCard2 - 1]
-                                            + " (" + playerScore + ")");
-                            gameIsRunning = false;
 
                         }
 
