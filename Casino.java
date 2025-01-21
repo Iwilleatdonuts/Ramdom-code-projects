@@ -22,8 +22,6 @@ public class Casino {
 
         casinoIsRunning = true;
 
-        System.out.println(suits[drawSuitIndex()]);
-
         while (casinoIsRunning) {
 
             switch (state) {
@@ -132,7 +130,27 @@ public class Casino {
 
                         while (gameIsRunning) {
 
-                            System.out.println("Your starting ");
+                            int playerScore = 0;
+
+                            int initCard1 = drawCard(false);
+                            int initCard2 = drawCard(false);
+
+                            int card1Value = Math.min(initCard1, 10);
+                            int card2Value = Math.min(initCard2, 10);
+
+                            if (card1Value == 1) {
+                                card1Value = 11;
+                            }
+                            if (card2Value == 1) {
+                                card2Value = 11;
+                            }
+
+                            playerScore = card1Value + card2Value;
+
+                            System.out.println(
+                                    "Your starting hand is " + cards[initCard1 - 1] + " and " + cards[initCard2 - 1]
+                                            + " (" + playerScore + ")");
+                            gameIsRunning = false;
 
                         }
 
@@ -174,7 +192,7 @@ public class Casino {
 
     }
 
-    static int drawCardIndex(boolean includeJokers) {
+    static int drawCard(boolean includeJokers) {
 
         int range = 13;
 
@@ -184,17 +202,17 @@ public class Casino {
 
         }
 
-        int cardIndex = (int) (Math.random() * range) + 1;
+        int card = (int) (Math.random() * range) + 1;
 
-        return cardIndex - 1;
+        return card;
 
     }
 
-    static int drawSuitIndex() {
+    static int drawSuit() {
 
         int suitIndex = (int) (Math.random() * 4) + 1;
 
-        return suitIndex - 1;
+        return suitIndex;
 
     }
 
