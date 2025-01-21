@@ -13,7 +13,7 @@ public class Casino {
 
         state = casinoGames.HOME;
 
-        updatePlayerInfo(true);
+        updatePlayerInfo(scanner, true);
 
         switch (state) {
 
@@ -24,7 +24,23 @@ public class Casino {
                 System.out.println("\t2 - Update player information");
                 System.out.println("\t3 - Leave casino");
 
-                //int option = scanner.nextInt();
+                int option = scanner.nextInt();
+
+                if (option == 1) {
+
+                    state = casinoGames.GAME_SELECTOR;
+
+                } else if (option == 2) {
+
+                    System.out.println("Will you also be resetting your currency back to $3000?\nType Y/N");
+                    
+
+                    state = casinoGames.BLACKJACK;
+                }
+
+                break;
+
+            case GAME_SELECTOR:
 
                 break;
 
@@ -34,19 +50,17 @@ public class Casino {
 
         }
 
+        scanner.close();
+
     }
 
-    static boolean updatePlayerInfo(boolean resetCurrency) {
-
-        Scanner scanner = new Scanner(System.in);
+    static boolean updatePlayerInfo(Scanner scan, boolean resetCurrency) {
 
         System.out.println("Please enter name");
-        name = scanner.nextLine();
+        name = scan.nextLine();
 
         System.out.println("Please enter Age");
-        age = scanner.nextInt();
-
-        scanner.close();
+        age = scan.nextInt();
 
         if (resetCurrency) {
             currency = 3000;
@@ -76,6 +90,7 @@ public class Casino {
     public enum casinoGames {
 
         HOME,
+        GAME_SELECTOR,
         BLACKJACK
 
     }
