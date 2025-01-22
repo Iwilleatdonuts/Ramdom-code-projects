@@ -48,8 +48,8 @@ public class LandmarkBolton_TommyTang {
         States page = States.GREETING; // Tracks the current page or state in the program
 
         int selectedMovie = 0; // Index of the movie selected by the user
-        String userName;       // Stores the user's name
-        int age = 0;           // Stores the user's age
+        String userName; // Stores the user's name
+        int age = 0; // Stores the user's age
 
         // Main loop to keep the program active until pageIsActive is false
         while (pageIsActive) {
@@ -140,9 +140,9 @@ public class LandmarkBolton_TommyTang {
 
     // Enum to represent the different states/pages in the program
     enum States {
-        GREETING,            // Initial greeting and menu options
-        DISPLAYING_MOVIES,   // Display list of movies
-        MOVIE_DETAILS,       // Show details for a selected movie
-        LOCATION_DETAILS     // Show theater location details
+        GREETING, // Initial greeting and menu options
+        DISPLAYING_MOVIES, // Display list of movies
+        MOVIE_DETAILS, // Show details for a selected movie
+        LOCATION_DETAILS // Show theater location details
     }
 }
