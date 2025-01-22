@@ -96,7 +96,7 @@ public class Casino {
 
                     System.out.println("\nWhat game would you like to play?\n");
                     System.out.println("\t1 - Blackjack");
-                    System.out.println("\t2 - what the sigma");
+                    System.out.println("\t2 - War");
                     System.out.println("\t5 - Return to home");
 
                     int gameOptions = scanner.nextInt();
@@ -106,6 +106,11 @@ public class Casino {
 
                         System.out.println("\nWelcome to Blackjack!");
                         state = casinoGames.BLACKJACK;
+
+                    } else if (gameOptions == 2) {
+
+                        System.out.println("\nWelcome to War!");
+                        state = casinoGames.WAR;
 
                     } else {
 
@@ -207,6 +212,7 @@ public class Casino {
 
                                 int dealerScore = drawCard(false);
                                 System.out.println("\n" + cards[dealerScore - 1]);
+                                pauseEffect();
 
                                 if (dealerScore == 1) {
 
@@ -219,7 +225,8 @@ public class Casino {
                                 }
 
                                 int secondDraw = drawCard(false);
-                                System.out.println(cards[secondDraw - 1]);
+                                System.out.println("\n" + cards[secondDraw - 1]);
+                                pauseEffect();
 
                                 if (secondDraw == 1 && dealerScore <= 10) {
 
@@ -236,7 +243,8 @@ public class Casino {
                                 while (dealerScore <= playerScore) {
 
                                     int dealerDraw = drawCard(false);
-                                    System.out.println(cards[dealerDraw - 1]);
+                                    System.out.println("\n" + cards[dealerDraw - 1]);
+                                    pauseEffect();
 
                                     if (dealerDraw == 1 && dealerScore <= 10) {
 
@@ -280,6 +288,125 @@ public class Casino {
                                 // gameIsRunning = false;
                                 // state = casinoGames.GAME_SELECTOR;
                                 // pauseEffect();
+
+                            }
+
+                        }
+
+                    } else {
+
+                        System.out.println("Good job, " + name);
+                        state = casinoGames.HOME;
+
+                    }
+
+                    break;
+
+                case WAR:
+
+                    System.out.println("\nWhat would you like to do?");
+                    System.out.println("\t1 - Play");
+                    System.out.println("\t2 - Leave");
+
+                    boolean itIsWarO_O = false;
+
+                    int warOptions = scanner.nextInt();
+                    scanner.nextLine();
+
+                    if (warOptions == 1) {
+
+                        int playerDraw = drawCard(true);
+                        System.out.println("\nYou have drawn a(n) " + cards[playerDraw - 1]);
+                        pauseEffect();
+
+                        int dealerDraw = drawCard(true);
+                        System.out.println("\nThe dealer has drawn a(n) " + cards[dealerDraw - 1]);
+                        pauseEffect();
+
+                        if (playerDraw > dealerDraw) {
+
+                            System.out.println(
+                                    "\nYou have drawn a higher value card, $100 will be added to your account");
+                            pauseEffect();
+
+                            currency += 100;
+
+                        } else if (playerDraw < dealerDraw) {
+
+                            System.out.println(
+                                    "\nYou have drawn a lower value card, $100 will be taken from your account");
+                            pauseEffect();
+
+                            currency -= 100;
+
+                        } else {
+
+                            System.out.println("\nYou have drawn the same value as the dealer, it is war...");
+                            pauseEffect();
+                            itIsWarO_O = true;
+
+                        }
+
+                        while (itIsWarO_O) {
+
+                            System.out.println("\nYou have drawn a(n)");
+
+                            int playerWarDraw1 = drawCard(true);
+                            System.out.println("\n" + cards[playerWarDraw1 - 1]);
+                            pauseEffect();
+
+                            int playerWarDraw2 = drawCard(true);
+                            System.out.println("\n" + cards[playerWarDraw2 - 1]);
+                            pauseEffect();
+
+                            int playerWarDraw3 = drawCard(true);
+                            System.out.println("\n" + cards[playerWarDraw3 - 1]);
+                            pauseEffect();
+
+                            int playerTotalWarValue = playerWarDraw1 + playerWarDraw2 + playerWarDraw3;
+
+                            System.out.println("\nYour total value is " + playerTotalWarValue);
+                            pauseEffect();
+
+                            System.out.println("\nThe dealer has drawn a(n)");
+
+                            int dealerWarDraw1 = drawCard(true);
+                            System.out.println("\n" + cards[dealerWarDraw1 - 1]);
+                            pauseEffect();
+
+                            int dealerWarDraw2 = drawCard(true);
+                            System.out.println("\n" + cards[dealerWarDraw2 - 1]);
+                            pauseEffect();
+
+                            int dealerWarDraw3 = drawCard(true);
+                            System.out.println("\n" + cards[dealerWarDraw3 - 1]);
+                            pauseEffect();
+
+                            int dealerTotalWarValue = dealerWarDraw1 + dealerWarDraw2 + dealerWarDraw3;
+
+                            System.out.println("\nThe dealer's total value is " + dealerTotalWarValue);
+                            pauseEffect();
+
+                            if (playerTotalWarValue > dealerTotalWarValue) {
+
+                                System.out.println("\nYou have won the war, $400 will be added to your account");
+                                pauseEffect();
+
+                                currency += 400;
+                                itIsWarO_O = false;
+
+                            } else if (playerTotalWarValue < dealerTotalWarValue) {
+
+                                System.out.println("\nYou have lost the war, $400 will be taken from your account");
+                                pauseEffect();
+
+                                currency -= 400;
+                                itIsWarO_O = false;
+
+                            } else {
+
+                                System.out.println("War is still among us");
+                                pauseEffect();
 
                             }
 
@@ -356,13 +483,13 @@ public class Casino {
     static void pauseEffect() throws InterruptedException {
 
         System.out.print("\n");
-        Thread.sleep(800);
+        Thread.sleep(500);
         System.out.print(" .");
-        Thread.sleep(800);
+        Thread.sleep(500);
         System.out.print(" .");
-        Thread.sleep(800);
+        Thread.sleep(500);
         System.out.println(" .");
-        Thread.sleep(800);
+        Thread.sleep(500);
 
     }
 
@@ -371,7 +498,8 @@ public class Casino {
         HOME,
         RESETTING,
         GAME_SELECTOR,
-        BLACKJACK
+        BLACKJACK,
+        WAR
 
     }
 }
