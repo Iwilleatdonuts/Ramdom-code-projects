@@ -31,6 +31,7 @@ public class Casino {
                     while (age < 19) {
 
                         updatePlayerInfo(scanner, true, 3000);
+                        pauseEffect();
 
                     }
 
@@ -72,6 +73,7 @@ public class Casino {
                     if (resetOptions == 1) {
 
                         updatePlayerInfo(scanner, true, 3000);
+                        pauseEffect();
 
                     } else if (resetOptions == 2) {
 
@@ -81,10 +83,12 @@ public class Casino {
                         scanner.nextLine();
 
                         updatePlayerInfo(scanner, true, newAmount);
+                        pauseEffect();
 
                     } else {
 
                         updatePlayerInfo(scanner, false, 0);
+                        pauseEffect();
 
                     }
 
@@ -119,7 +123,8 @@ public class Casino {
                         state = casinoGames.SUITBET;
 
                     } else {
-
+                        
+                        pauseEffect();
                         state = casinoGames.HOME;
 
                     }
@@ -157,6 +162,7 @@ public class Casino {
 
                         System.out.println(
                                 "\nYour starting hand is " + cards[initCard1 - 1] + " and " + cards[initCard2 - 1]);
+                        pauseEffect();
 
                         while (gameIsRunning) {
 
@@ -169,7 +175,6 @@ public class Casino {
                                 currency += 500;
 
                                 gameIsRunning = false;
-                                state = casinoGames.GAME_SELECTOR;
                                 break;
 
                             } else if (playerScore > 21) {
@@ -181,12 +186,12 @@ public class Casino {
                                 currency -= 500;
 
                                 gameIsRunning = false;
-                                state = casinoGames.GAME_SELECTOR;
                                 break;
 
                             } else {
 
-                                System.out.println("Your current score is " + playerScore);
+                                System.out.println("\nYour current score is " + playerScore);
+                                pauseEffect();
 
                             }
 
@@ -276,7 +281,6 @@ public class Casino {
                                     currency += 500;
 
                                     gameIsRunning = false;
-                                    state = casinoGames.GAME_SELECTOR;
 
                                 } else {
 
@@ -287,7 +291,6 @@ public class Casino {
                                     currency -= 500;
 
                                     gameIsRunning = false;
-                                    state = casinoGames.GAME_SELECTOR;
 
                                 }
 
@@ -301,8 +304,9 @@ public class Casino {
 
                     } else {
 
-                        System.out.println("Good job, " + name);
-                        state = casinoGames.HOME;
+                        System.out.println("See you soon, " + name);
+                        pauseEffect();
+                        state = casinoGames.GAME_SELECTOR;
 
                     }
 
@@ -420,8 +424,9 @@ public class Casino {
 
                     } else {
 
-                        System.out.println("Good job, " + name);
-                        state = casinoGames.HOME;
+                        System.out.println("See you soon, " + name);
+                        pauseEffect();
+                        state = casinoGames.GAME_SELECTOR;
 
                     }
 
@@ -451,6 +456,7 @@ public class Casino {
                         scanner.nextLine();
 
                         System.out.println("\nYou are betting $" + playerBet + " on " + suits[playerSuitBet - 1]);
+                        pauseEffect();
 
                         int dealerBet = drawSuit();
 
@@ -460,7 +466,7 @@ public class Casino {
 
                         }
 
-                        System.out.println("\nThe dealer is betting on " + suits[dealerBet -1]);
+                        System.out.println("\nThe dealer is betting on " + suits[dealerBet - 1]);
                         pauseEffect();
 
                         boolean drawingSuits = true;
@@ -501,8 +507,9 @@ public class Casino {
 
                     } else {
 
-                        System.out.println("Good job, " + name);
-                        state = casinoGames.HOME;
+                        System.out.println("See you soon, " + name);
+                        pauseEffect();
+                        state = casinoGames.GAME_SELECTOR;
 
                     }
 
