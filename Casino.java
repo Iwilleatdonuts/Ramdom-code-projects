@@ -97,7 +97,8 @@ public class Casino {
                     System.out.println("\nWhat game would you like to play?\n");
                     System.out.println("\t1 - Blackjack");
                     System.out.println("\t2 - War");
-                    System.out.println("\t5 - Return to home");
+                    System.out.println("\t3 - Suit-bet");
+                    System.out.println("\t4 - Return to home");
 
                     int gameOptions = scanner.nextInt();
                     scanner.nextLine();
@@ -111,6 +112,11 @@ public class Casino {
 
                         System.out.println("\nWelcome to War!");
                         state = casinoGames.WAR;
+
+                    } else if (gameOptions == 3) {
+
+                        System.out.println("\nWelcome to Suit-bet!");
+                        state = casinoGames.SUITBET;
 
                     } else {
 
@@ -421,6 +427,87 @@ public class Casino {
 
                     break;
 
+                case SUITBET:
+
+                    System.out.println("\nWhat would you like to do?");
+                    System.out.println("\t1 - Play");
+                    System.out.println("\t2 - Leave");
+
+                    int suitBetOptions = scanner.nextInt();
+                    scanner.nextLine();
+
+                    if (suitBetOptions == 1) {
+
+                        System.out.println("\nBet on one of the following suits");
+                        System.out.println("\t1 - Clubs");
+                        System.out.println("\t2 - Diamonds");
+                        System.out.println("\t3 - Hearts");
+                        System.out.println("\t4 - Spades");
+
+                        int playerSuitBet = scanner.nextInt();
+
+                        System.out.println("\nHow much money will you bet?");
+                        int playerBet = scanner.nextInt();
+                        scanner.nextLine();
+
+                        System.out.println("\nYou are betting $" + playerBet + " on " + suits[playerSuitBet - 1]);
+
+                        int dealerBet = drawSuit();
+
+                        while (dealerBet == playerSuitBet) {
+
+                            dealerBet = drawSuit();
+
+                        }
+
+                        System.out.println("\nThe dealer is betting on " + suits[dealerBet -1]);
+                        pauseEffect();
+
+                        boolean drawingSuits = true;
+
+                        while (drawingSuits) {
+
+                            int suitDraw = drawSuit();
+
+                            System.out.println("\nThe dealer has drawn " + suits[suitDraw - 1]);
+                            pauseEffect();
+
+                            if (suitDraw == playerSuitBet) {
+
+                                System.out.println(
+                                        "\nCongratulations! $" + playerBet + " will be added to your account");
+                                pauseEffect();
+
+                                currency += playerBet;
+                                drawingSuits = false;
+
+                            } else if (suitDraw == dealerBet) {
+
+                                System.out.println(
+                                        "\nWomp womp, $" + playerBet + " will be removed from your account");
+                                pauseEffect();
+
+                                currency -= playerBet;
+                                drawingSuits = false;
+
+                            } else {
+
+                                System.out.println("\nNo bets were correct, drawing again");
+                                pauseEffect();
+
+                            }
+
+                        }
+
+                    } else {
+
+                        System.out.println("Good job, " + name);
+                        state = casinoGames.HOME;
+
+                    }
+
+                    break;
+
             }
 
         }
@@ -499,7 +586,8 @@ public class Casino {
         RESETTING,
         GAME_SELECTOR,
         BLACKJACK,
-        WAR
+        WAR,
+        SUITBET
 
     }
 }
