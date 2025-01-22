@@ -31,6 +31,7 @@ public class Casino {
         while (casinoIsRunning) {
 
             // Initialize the state machine
+            // Use of switch case statements can be found in W3Schools
             switch (state) {
 
                 // Home state: Acts as the home page of this program, allows the user to switch
@@ -710,6 +711,8 @@ public class Casino {
         // Math.random returns a double from 0-1, meaning that it must be multiplied by
         // the scale needed, range, and then typecasted into an integer to be used in
         // the program
+        // Narrowing casting is found on W3Schools, along with examples of how to
+        // typecast
         int card = (int) (Math.random() * range) + 1;
 
         // returns the randomized card
@@ -734,6 +737,8 @@ public class Casino {
     // process
     static void pauseEffect() throws InterruptedException {
 
+        // Thread.sleep() was found using Stackoverflow, including the
+        // InterruptedException
         System.out.print("\n");
         Thread.sleep(500);
         System.out.print(" .");
@@ -747,6 +752,8 @@ public class Casino {
 
     // Enums are used in this code to represent the different stages of being in the
     // casino
+    // Use of enums can be found on W3Schools, along with using them within a switch
+    // statement
     public enum casinoGames {
 
         HOME,
