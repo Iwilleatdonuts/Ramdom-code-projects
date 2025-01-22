@@ -152,17 +152,20 @@ public class Casino {
                             if (playerScore == 21) {
 
                                 System.out.println("\nCongratulations! You achieved a hand-total of 21");
-                                System.out.println("\n$500 will be added to your balance...");
+                                System.out.println("\n$500 will be added to your balance");
+                                pauseEffect();
 
                                 currency += 500;
 
                                 gameIsRunning = false;
                                 state = casinoGames.GAME_SELECTOR;
+                                break;
 
                             } else if (playerScore > 21) {
 
                                 System.out.println("\nYou went above 21, womp womp");
-                                System.out.println("\n$500 will be taken from your account...");
+                                System.out.println("\n$500 will be taken from your account");
+                                pauseEffect();
 
                                 currency -= 500;
 
@@ -193,14 +196,91 @@ public class Casino {
 
                                 playerScore += drawValue;
 
-                                System.out.println("\nYou drew a " + cards[drawCard - 1]);
+                                System.out.println("\nYou drew a(n) " + cards[drawCard - 1]);
+                                pauseEffect();
 
                             } else {
 
-                                System.out.println("Dealer is now hiogh on larte night deluelues");
+                                System.out.println("\nYou are now standing with " + playerScore);
+                                System.out.println("\nIt is now the dealer's turn");
+                                pauseEffect();
 
-                                gameIsRunning = false;
-                                state = casinoGames.GAME_SELECTOR;
+                                int dealerScore = drawCard(false);
+                                System.out.println("\n" + cards[dealerScore - 1]);
+
+                                if (dealerScore == 1) {
+
+                                    dealerScore = 11;
+
+                                } else if (dealerScore > 10) {
+
+                                    dealerScore = 10;
+
+                                }
+
+                                int secondDraw = drawCard(false);
+                                System.out.println(cards[secondDraw - 1]);
+
+                                if (secondDraw == 1 && dealerScore <= 10) {
+
+                                    secondDraw = 11;
+
+                                } else if (secondDraw > 10) {
+
+                                    secondDraw = 10;
+
+                                }
+
+                                dealerScore += secondDraw;
+
+                                while (dealerScore <= playerScore) {
+
+                                    int dealerDraw = drawCard(false);
+                                    System.out.println(cards[dealerDraw - 1]);
+
+                                    if (dealerDraw == 1 && dealerScore <= 10) {
+
+                                        dealerDraw = 11;
+
+                                    } else if (dealerDraw > 10) {
+
+                                        dealerDraw = 10;
+
+                                    }
+
+                                    dealerScore += dealerDraw;
+
+                                }
+
+                                if (dealerScore > 21) {
+
+                                    System.out.println(
+                                            "\nThe dealer went bust with " + dealerScore
+                                                    + ", congratulations! $500 will now be added to your account");
+                                    pauseEffect();
+
+                                    currency += 500;
+
+                                    gameIsRunning = false;
+                                    state = casinoGames.GAME_SELECTOR;
+
+                                } else {
+
+                                    System.out.println("\nThe dealer achieved a higher hand of " + dealerScore
+                                            + ", $500 will now be taken from your account");
+                                    pauseEffect();
+
+                                    currency -= 500;
+
+                                    gameIsRunning = false;
+                                    state = casinoGames.GAME_SELECTOR;
+
+                                }
+
+                                // gameIsRunning = false;
+                                // state = casinoGames.GAME_SELECTOR;
+                                // pauseEffect();
+
                             }
 
                         }
@@ -232,13 +312,19 @@ public class Casino {
         scan.nextLine();
 
         if (resetCurrency) {
+
             currency = resetAmount;
+
         }
 
         if (age < 19) {
+
             System.out.println("\nYou are below the legal age for gambling in Ontario, please leave and try again \n");
+
         } else {
+
             System.out.println("\nWelcome to the casino, " + name);
+
         }
 
     }
@@ -264,6 +350,19 @@ public class Casino {
         int suitIndex = (int) (Math.random() * 4) + 1;
 
         return suitIndex;
+
+    }
+
+    static void pauseEffect() throws InterruptedException {
+
+        System.out.print("\n");
+        Thread.sleep(800);
+        System.out.print(" .");
+        Thread.sleep(800);
+        System.out.print(" .");
+        Thread.sleep(800);
+        System.out.println(" .");
+        Thread.sleep(800);
 
     }
 
